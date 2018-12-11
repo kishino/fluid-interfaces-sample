@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <div class="player-modal__background" v-show="background" :style="{
-      opacity: swipeRatio,
+  <div class="player-modal">
+    <div class="player-modal__background" v-show="backgroundVisible" :style="{
+      opacity: swipeRatio * 0.8,
       transition: dragging ? undefined : 'all 300ms'
     }"></div>
-    <div class="player-modal" ref="modal"
-         :style="{
-         transform: 'translate3d(0, ' + pageTop + 'px, 0)',
-         transition: dragging ? undefined : 'all 300ms'
-       }">
+    <div class="player-modal__content" ref="modal">
       <div class="player-modal__semi"
-           @touchstart.prevent="onTouchStart"
+           @touchstart="onTouchStart"
            @touchmove.prevent="onTouchMove"
-           @touchend.prevent="onTouchEnd"
+           @touchend="onTouchEnd"
            @click.stop="show">
         <div class="player-modal__image" :style="{
-        width: imageSize+'px',
-        height: imageSize+'px',
-        transition: dragging ? undefined : 'all 300ms'
-      }">
-          <div class="player-modal__close" v-show="state === 'open'" style="font-size: 24px;" @click.stop="close"><v-ons-icon icon="fa-arrow-down"></v-ons-icon></div>
+          width: imageSize+'px',
+          height: imageSize+'px',
+          transition: dragging ? undefined : 'all 300ms'
+        }">
+          <div class="player-modal__close" v-show="state === 'open'" @click.stop="close">
+            <v-ons-icon icon="fa-arrow-down"></v-ons-icon>
+          </div>
         </div>
         <div class="player-modal__semi-other" v-show="!dragging && state === 'semiopen'">
           <div class="player-modal__semi-content">
@@ -41,9 +39,12 @@
 </template>
 
 <script>
-  import playerModalEvent from './player-modal-event';
+  import Vue from 'vue';
+  import dynamics from 'dynamics.js';
 
   const semimodalHeight = 64;
+
+  export const playerModalEvent = new Vue();
 
   export default {
     props: ['modalState'],
@@ -56,7 +57,7 @@
         windowWidth: null,
         swipeRatio: 1,
         state: 'close',
-        background: false,
+        backgroundVisible: false,
         data: {
           title: 'タイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトル',
           author: '作者作者作者作者作者作者作者作者作者作者作者作者作者作者作者'
@@ -69,6 +70,7 @@
       this.pageTop = this.windowHeight;
     },
     mounted() {
+      this.$refs.modal.style.transform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, ${this.pageTop}, 0, 1)`;
       this.$refs.modal.addEventListener('transitionend', this.onTransitionEnd);
       playerModalEvent.$on('show', this.show);
     },
@@ -90,11 +92,14 @@
         this.pageTop = 0;
         this.swipeRatio = 1;
         this.state = 'open';
+        this.startSpringNoneAnimation();
       },
       close() {
         this.pageTop = this.windowHeight;
         this.swipeRatio = 0;
         this.state = 'close';
+        this.emitState();
+        this.startSpringNoneAnimation();
       },
       play() {
         console.info('play!!');
@@ -104,39 +109,77 @@
         this.startPageTop = this.pageTop;
       },
       onTouchMove(e) {
-        this.state = 'dragging';
-        this.background = true;
+        if (this.state !== 'dragging') {
+          this.state = 'dragging';
+          this.emitState();
+        }
+        this.backgroundVisible = true;
         const pageTop = this.startPageTop + e.changedTouches[0].clientY - this.startY;
         if (pageTop >= 0 && pageTop <= this.windowHeight - semimodalHeight) {
           this.pageTop = pageTop;
-          this.swipeRatio = 1 - (pageTop / this.windowHeight);
-          e.preventDefault();
+          this.$refs.modal.style.transform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, ${this.pageTop}, 0, 1)`;
+          this.swipeRatio = 1 - (pageTop / (this.windowHeight - semimodalHeight));
         }
       },
       onTouchEnd(e) {
+        if (this.state === 'dragging') {
+          e.preventDefault();
+        }
         if (this.pageTop > this.windowHeight/2) {
           this.pageTop = this.windowHeight - semimodalHeight;
-          this.swipeRatio = this.swipeRatio/this.windowWidth;
+          this.swipeRatio = 0;
           this.state = 'semiopen';
+          this.startSpringAnimation();
         } else {
           this.pageTop = 0;
           this.swipeRatio = 1;
           this.state = 'open';
+          this.startSpringNoneAnimation();
         }
       },
       onTransitionEnd() {
-        this.background = this.state === 'open';
+        this.backgroundVisible = this.state === 'open';
+      },
+      startSpringAnimation() {
+        dynamics.animate(this.$refs.modal, {
+          translateY: this.pageTop
+        }, {
+          type: dynamics.spring,
+          frequency: 180,
+          friction: 300,
+          duration: 1000,
+          delay: 0,
+          complete: () => this.emitState()
+        });
+      },
+      startSpringNoneAnimation() {
+        dynamics.animate(this.$refs.modal, {
+          translateY: this.pageTop
+        }, {
+          type: dynamics.spring,
+          frequency: 0,
+          friction: 300,
+          duration: 500,
+          delay: 0,
+          complete: () => this.emitState()
+        });
+      },
+      emitState() {
+        this.$emit('update:modalState', this.state);
       }
     },
     watch: {
       state(newValue) {
-        this.$emit('update:modalState', newValue);
+        // this.$emit('update:modalState', newValue);
       }
     }
   }
 </script>
 
 <style scoped>
+.player-modal {
+  font-family: -apple-system,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+}
 .player-modal__background {
   background-color: black;
   height: 100%;
@@ -147,8 +190,7 @@
   left: 0;
   z-index: 10;
 }
-.player-modal {
-  width: 100vw;
+.player-modal__content {
   z-index: 11;
   overflow: hidden;
   position: fixed;
@@ -158,7 +200,6 @@
   left: 0;
   color: #333;
   background-color: white;
-  font-family: -apple-system,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -171,6 +212,7 @@
   height: 56px;
   text-align: center;
   line-height: 56px;
+  font-size: 24px;
 }
 .player-modal__image {
   background-image: url('./assets/image.jpg');

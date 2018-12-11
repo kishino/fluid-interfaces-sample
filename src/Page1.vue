@@ -10,7 +10,7 @@
 <script>
   import customToolbar from './CustomToolbar';
   import page2 from './Page2';
-  import playerModalEvent from './player-modal-event';
+  import { playerModalEvent } from './PlayerModal';
 
   export default {
     computed: {
