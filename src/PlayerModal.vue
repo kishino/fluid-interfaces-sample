@@ -71,11 +71,9 @@
     },
     mounted() {
       this.$refs.modal.style.transform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, ${this.pageTop}, 0, 1)`;
-      this.$refs.modal.addEventListener('transitionend', this.onTransitionEnd);
       playerModalEvent.$on('show', this.show);
     },
     destroyed() {
-      this.$refs.modal.removeEventListener('transitionend', this.onTransitionEnd);
       playerModalEvent.$off('show', this.show);
     },
     computed: {
@@ -149,7 +147,10 @@
           friction: 300,
           duration: 1000,
           delay: 0,
-          complete: () => this.emitState()
+          complete: () => {
+            this.emitState();
+            this.onTransitionEnd();
+          }
         });
       },
       startSpringNoneAnimation() {
@@ -161,16 +162,14 @@
           friction: 300,
           duration: 500,
           delay: 0,
-          complete: () => this.emitState()
+          complete: () => {
+            this.emitState();
+            this.onTransitionEnd();
+          }
         });
       },
       emitState() {
         this.$emit('update:modalState', this.state);
-      }
-    },
-    watch: {
-      state(newValue) {
-        // this.$emit('update:modalState', newValue);
       }
     }
   }
