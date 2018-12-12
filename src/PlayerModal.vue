@@ -9,7 +9,7 @@
            @touchstart="onTouchStart"
            @touchmove.prevent="onTouchMove"
            @touchend="onTouchEnd"
-           @click.stop="show">
+           @click.stop="show(true)">
         <div class="player-modal__image" :style="{
           width: imageSize+'px',
           height: imageSize+'px',
@@ -25,7 +25,10 @@
             <div class="player-modal__semi-author">{{ data.author }}</div>
           </div>
           <div class="player-modal__semi-action">
-            <div style="font-size: 22px;padding-top: 3px;" @click.stop="play"><v-ons-icon icon="fa-play"></v-ons-icon></div>
+            <div style="font-size: 22px;padding-top: 3px;" @click.stop="play">
+              <v-ons-icon v-show="playing" icon="fa-pause"></v-ons-icon>
+              <v-ons-icon v-show="!playing" icon="fa-play"></v-ons-icon>
+            </div>
             <div style="font-size: 26px;" @click.stop="close"><v-ons-icon icon="fa-times"></v-ons-icon></div>
           </div>
         </div>
@@ -42,7 +45,7 @@
   import Vue from 'vue';
   import dynamics from 'dynamics.js';
 
-  const semimodalHeight = 64;
+  const SEMIMODAL_HEIGHT = 64;
 
   export const playerModalEvent = new Vue();
 
@@ -58,6 +61,7 @@
         swipeRatio: 1,
         state: 'close',
         backgroundVisible: false,
+        playing: false,
         data: {
           title: 'タイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトル',
           author: '作者作者作者作者作者作者作者作者作者作者作者作者作者作者作者'
@@ -79,17 +83,18 @@
     computed: {
       imageSize() {
         const size = this.windowWidth*this.swipeRatio;
-        return size >= semimodalHeight ? size : semimodalHeight;
+        return size >= SEMIMODAL_HEIGHT ? size : SEMIMODAL_HEIGHT;
       },
       dragging() {
         return this.state === 'dragging';
       }
     },
     methods: {
-      show() {
+      show(reshow) {
         this.pageTop = 0;
         this.swipeRatio = 1;
         this.state = 'open';
+        if (!reshow) this.playing = true;
         this.startSpringNoneAnimation();
       },
       close() {
@@ -100,7 +105,7 @@
         this.startSpringNoneAnimation();
       },
       play() {
-        console.info('play!!');
+        this.playing = !this.playing;
       },
       onTouchStart(e) {
         this.startY = e.changedTouches[0].clientY;
@@ -113,10 +118,10 @@
         }
         this.backgroundVisible = true;
         const pageTop = this.startPageTop + e.changedTouches[0].clientY - this.startY;
-        if (pageTop >= 0 && pageTop <= this.windowHeight - semimodalHeight) {
+        if (pageTop >= 0 && pageTop <= this.windowHeight - SEMIMODAL_HEIGHT) {
           this.pageTop = pageTop;
           this.$refs.modal.style.transform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, ${this.pageTop}, 0, 1)`;
-          this.swipeRatio = 1 - (pageTop / (this.windowHeight - semimodalHeight));
+          this.swipeRatio = 1 - (pageTop / (this.windowHeight - SEMIMODAL_HEIGHT));
         }
       },
       onTouchEnd(e) {
@@ -124,7 +129,7 @@
           e.preventDefault();
         }
         if (this.pageTop > this.windowHeight/2) {
-          this.pageTop = this.windowHeight - semimodalHeight;
+          this.pageTop = this.windowHeight - SEMIMODAL_HEIGHT;
           this.swipeRatio = 0;
           this.state = 'semiopen';
           this.startSpringAnimation();
