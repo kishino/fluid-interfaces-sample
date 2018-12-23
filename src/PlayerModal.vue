@@ -9,7 +9,7 @@
            @touchcancel="onTouchEnd"
            @click.stop="open(true)">
         <div class="player-modal__image" :style="imageStyle">
-          <div class="player-modal__close" v-show="state === 'open'" @click.stop="close">
+          <div class="player-modal__close" v-show="state === 'open'" @click.stop="semiopen">
             <v-ons-icon icon="fa-arrow-down"></v-ons-icon>
           </div>
         </div>
