@@ -23,7 +23,7 @@
         this.pageStack.push(page2);
       },
       openModal() {
-        playerModalEvent.$emit('show');
+        playerModalEvent.$emit('open');
       }
     },
     props: ['pageStack'],

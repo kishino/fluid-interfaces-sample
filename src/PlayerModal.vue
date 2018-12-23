@@ -1,20 +1,14 @@
 <template>
   <div class="player-modal">
-    <div class="player-modal__background" v-show="backgroundVisible" :style="{
-      opacity: swipeRatio * 0.8,
-      transition: dragging ? undefined : 'all 300ms'
-    }"></div>
+    <div class="player-modal__background" v-show="backgroundVisible" :style="backgroundStyle"></div>
     <div class="player-modal__content" ref="modal">
       <div class="player-modal__semi"
            @touchstart="onTouchStart"
            @touchmove.prevent="onTouchMove"
            @touchend="onTouchEnd"
-           @click.stop="show(true)">
-        <div class="player-modal__image" :style="{
-          width: imageSize+'px',
-          height: imageSize+'px',
-          transition: dragging ? undefined : 'all 300ms'
-        }">
+           @touchcancel="onTouchEnd"
+           @click.stop="open(true)">
+        <div class="player-modal__image" :style="imageStyle">
           <div class="player-modal__close" v-show="state === 'open'" @click.stop="close">
             <v-ons-icon icon="fa-arrow-down"></v-ons-icon>
           </div>
@@ -46,6 +40,7 @@
   import dynamics from 'dynamics.js';
 
   const SEMIMODAL_HEIGHT = 64;
+  const OPEN_OR_SEMIOPEN_RATIO = 0.25;
 
   export const playerModalEvent = new Vue();
 
@@ -60,6 +55,7 @@
         windowWidth: null,
         swipeRatio: 1,
         state: 'close',
+        prevState: null,
         backgroundVisible: false,
         playing: false,
         data: {
@@ -75,12 +71,25 @@
     },
     mounted() {
       this.$refs.modal.style.transform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, ${this.pageTop}, 0, 1)`;
-      playerModalEvent.$on('show', this.show);
+      playerModalEvent.$on('open', this.open);
     },
     destroyed() {
-      playerModalEvent.$off('show', this.show);
+      playerModalEvent.$off('open', this.open);
     },
     computed: {
+      backgroundStyle() {
+        return {
+          opacity: this.swipeRatio * 0.8,
+          transition: this.dragging ? undefined : 'all 300ms'
+        };
+      },
+      imageStyle() {
+        return {
+          width: this.imageSize+'px',
+          height: this.imageSize+'px',
+          transition: this.dragging ? undefined : 'all 300ms'
+        };
+      },
       imageSize() {
         const size = this.windowWidth*this.swipeRatio;
         return size >= SEMIMODAL_HEIGHT ? size : SEMIMODAL_HEIGHT;
@@ -90,12 +99,18 @@
       }
     },
     methods: {
-      show(reshow) {
+      open(reopen) {
         this.pageTop = 0;
         this.swipeRatio = 1;
         this.state = 'open';
-        if (!reshow) this.playing = true;
+        if (!reopen) this.playing = true;
         this.startSpringNoneAnimation();
+      },
+      semiopen() {
+        this.pageTop = this.windowHeight - SEMIMODAL_HEIGHT;
+        this.swipeRatio = 0;
+        this.state = 'semiopen';
+        this.startSpringAnimation();
       },
       close() {
         this.pageTop = this.windowHeight;
@@ -110,6 +125,7 @@
       onTouchStart(e) {
         this.startY = e.changedTouches[0].clientY;
         this.startPageTop = this.pageTop;
+        this.prevState = this.state;
       },
       onTouchMove(e) {
         if (this.state !== 'dragging') {
@@ -128,16 +144,11 @@
         if (this.state === 'dragging') {
           e.preventDefault();
         }
-        if (this.pageTop > this.windowHeight/2) {
-          this.pageTop = this.windowHeight - SEMIMODAL_HEIGHT;
-          this.swipeRatio = 0;
-          this.state = 'semiopen';
-          this.startSpringAnimation();
+        if ((this.prevState === 'open' && this.pageTop > this.windowHeight*OPEN_OR_SEMIOPEN_RATIO)
+          || (this.prevState !== 'open' && this.pageTop > this.windowHeight*(1-OPEN_OR_SEMIOPEN_RATIO))) {
+          this.semiopen();
         } else {
-          this.pageTop = 0;
-          this.swipeRatio = 1;
-          this.state = 'open';
-          this.startSpringNoneAnimation();
+          this.open();
         }
       },
       onTransitionEnd() {
@@ -148,8 +159,8 @@
           translateY: this.pageTop
         }, {
           type: dynamics.spring,
-          frequency: 180,
-          friction: 300,
+          frequency: 150,
+          friction: 350,
           duration: 1000,
           delay: 0,
           complete: () => {

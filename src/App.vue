@@ -15,7 +15,7 @@
     data() {
       return {
         pageStack: [page1],
-        modalState: 'closed'
+        modalState: 'close'
       }
     },
     computed: {
