@@ -9,7 +9,7 @@
            @touchcancel="onTouchEnd"
            @click.stop="open(true)">
         <div class="player-modal__image" :style="imageStyle">
-          <div class="player-modal__close" v-show="state === 'open'" @click.stop="semiopen">
+          <div class="player-modal__close" v-show="state === 'open'" @click.stop="semiopen(false)">
             <v-ons-icon icon="fa-arrow-down"></v-ons-icon>
           </div>
         </div>
@@ -106,11 +106,15 @@
         if (!reopen) this.playing = true;
         this.startSpringNoneAnimation();
       },
-      semiopen() {
+      semiopen(animation = true) {
         this.pageTop = this.windowHeight - SEMIMODAL_HEIGHT;
         this.swipeRatio = 0;
         this.state = 'semiopen';
-        this.startSpringAnimation();
+        if (animation) {
+          this.startSpringAnimation();
+        } else {
+          this.startSpringNoneAnimation();
+        }
       },
       close() {
         this.pageTop = this.windowHeight;
