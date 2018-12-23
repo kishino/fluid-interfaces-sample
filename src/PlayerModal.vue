@@ -3,7 +3,7 @@
     <div class="player-modal__background" v-show="backgroundVisible" :style="backgroundStyle"></div>
     <div class="player-modal__content" ref="modal">
       <div class="player-modal__semi"
-           @touchstart="onTouchStart"
+           @touchstart.passive="onTouchStart"
            @touchmove.prevent="onTouchMove"
            @touchend="onTouchEnd"
            @touchcancel="onTouchEnd"
