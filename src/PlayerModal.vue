@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <div class="player-modal__main" :style="{ opacity: swipeRatio }">
+      <div class="player-modal__main" :style="mainStyle">
         <div class="player-modal__main-title">{{ data.title }}</div>
         <div class="player-modal__main-author">{{ data.author }}</div>
       </div>
@@ -84,10 +84,18 @@
         };
       },
       imageStyle() {
+        const scale = this.imageSize / this.windowWidth;
         return {
-          width: this.imageSize+'px',
-          height: this.imageSize+'px',
-          transition: this.dragging ? undefined : 'all 300ms'
+          transition: this.dragging ? undefined : 'transform 300ms',
+          transform: `scale(${scale})`,
+          position: this.state !== 'semiopen' ? undefined : 'absolute'
+        };
+      },
+      mainStyle() {
+        const y = this.dragging ? -(this.windowWidth - this.imageSize) : 0;
+        return {
+          opacity: this.swipeRatio,
+          transform: `translateY(${y}px)`,
         };
       },
       imageSize() {
@@ -180,7 +188,7 @@
           type: dynamics.spring,
           frequency: 0,
           friction: 300,
-          duration: 500,
+          duration: 600,
           delay: 0,
           complete: () => {
             this.emitState();
@@ -239,7 +247,9 @@
   background-repeat: no-repeat;
   background-size: cover;
   cursor: zoom-in;
+  width: 100vw;
   height: 100vw;
+  transform-origin: left top;
 }
 .player-modal__semi-other {
   display: flex;
@@ -247,6 +257,7 @@
   align-items: center;
   overflow: hidden;
   width: calc(100% - 64px);
+  margin-left: 64px;
 }
 .player-modal__semi-content {
   text-align: left;
