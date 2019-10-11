@@ -18,7 +18,7 @@
     "monaca:transpile": "npm run build",
     "monaca:debug": "npm run watch",
     "monaca:upload": "monaca upload || exit 0",
-    "dev": "webpack-serve --open --host localhost",
+    "dev": "webpack-serve --open",
     "build": "webpack --mode production",
     "watch": "webpack --watch --mode production"
   },

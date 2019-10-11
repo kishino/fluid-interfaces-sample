@@ -42,7 +42,7 @@
   const SEMIMODAL_HEIGHT = 64;
   const OPEN_OR_SEMIOPEN_RATIO = 0.25;
 
-  export const playerModalEvent = new Vue();
+  export const eventEmitter = new Vue();
 
   export default {
     props: ['modalState'],
@@ -71,10 +71,10 @@
     },
     mounted() {
       this.$refs.modal.style.transform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, ${this.pageTop}, 0, 1)`;
-      playerModalEvent.$on('open', this.open);
+      eventEmitter.$on('open', this.open);
     },
     destroyed() {
-      playerModalEvent.$off('open', this.open);
+      eventEmitter.$off('open', this.open);
     },
     computed: {
       backgroundStyle() {
@@ -204,95 +204,95 @@
 </script>
 
 <style scoped>
-.player-modal {
-  font-family: -apple-system,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
-}
-.player-modal__background {
-  background-color: black;
-  height: 100%;
-  position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
-}
-.player-modal__content {
-  z-index: 11;
-  overflow: hidden;
-  position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  color: #333;
-  background-color: white;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-.player-modal__semi {
-  display: flex;
-}
-.player-modal__close {
-  color: white;
-  width: 56px;
-  height: 56px;
-  text-align: center;
-  line-height: 56px;
-  font-size: 24px;
-}
-.player-modal__image {
-  background-image: url('./assets/image.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  cursor: zoom-in;
-  width: 100vw;
-  height: 100vw;
-  transform-origin: left top;
-}
-.player-modal__semi-other {
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-  overflow: hidden;
-  width: calc(100% - 64px);
-  margin-left: 64px;
-}
-.player-modal__semi-content {
-  text-align: left;
-  flex-grow: 1;
-  padding: 8px 0 8px 8px;
-  overflow: hidden;
-}
-.player-modal__semi-content > div {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.player-modal__semi-title {
-}
-.player-modal__semi-author {
-  color: #999;
-}
-.player-modal__semi-action {
-  display: flex;
-  align-items: center;
-  line-height: 44px;
-}
-.player-modal__semi-action > div {
-  width: 44px;
-  height: 44px;
-  text-align: center;
-}
-.player-modal__main {
-}
-.player-modal__main-title {
-  width: 100%;
-  text-align: center;
-  font-size: 21px;
-}
-.player-modal__main-author {
-  width: 100%;
-}
+  .player-modal {
+    font-family: -apple-system,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+  }
+  .player-modal__background {
+    background-color: black;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+  }
+  .player-modal__content {
+    z-index: 11;
+    overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    color: #333;
+    background-color: white;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .player-modal__semi {
+    display: flex;
+  }
+  .player-modal__close {
+    color: white;
+    width: 56px;
+    height: 56px;
+    text-align: center;
+    line-height: 56px;
+    font-size: 24px;
+  }
+  .player-modal__image {
+    background-image: url('./assets/image.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: zoom-in;
+    width: 100vw;
+    height: 100vw;
+    transform-origin: left top;
+  }
+  .player-modal__semi-other {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    overflow: hidden;
+    width: calc(100% - 64px);
+    margin-left: 64px;
+  }
+  .player-modal__semi-content {
+    text-align: left;
+    flex-grow: 1;
+    padding: 8px 0 8px 8px;
+    overflow: hidden;
+  }
+  .player-modal__semi-content > div {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .player-modal__semi-title {
+  }
+  .player-modal__semi-author {
+    color: #999;
+  }
+  .player-modal__semi-action {
+    display: flex;
+    align-items: center;
+    line-height: 44px;
+  }
+  .player-modal__semi-action > div {
+    width: 44px;
+    height: 44px;
+    text-align: center;
+  }
+  .player-modal__main {
+  }
+  .player-modal__main-title {
+    width: 100%;
+    text-align: center;
+    font-size: 21px;
+  }
+  .player-modal__main-author {
+    width: 100%;
+  }
 </style>
