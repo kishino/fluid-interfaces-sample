@@ -12,6 +12,7 @@
           <div class="player-modal__close" v-show="state === 'open'" @click.stop="semiopen(false)">
             <v-ons-icon icon="fa-arrow-down"></v-ons-icon>
           </div>
+          <video src="./assets/video.mp4" width="375" height="250"></video>
         </div>
         <div class="player-modal__semi-other" v-show="!dragging && state === 'semiopen'">
           <div class="player-modal__semi-content">
@@ -28,8 +29,21 @@
         </div>
       </div>
       <div class="player-modal__main" :style="mainStyle">
-        <div class="player-modal__main-title">{{ data.title }}</div>
-        <div class="player-modal__main-author">{{ data.author }}</div>
+        <div class="player-modal__main-title">
+          <div>{{ data.title }}</div>
+          <div style="color: #999999;font-size: 14px">282回視聴</div>
+        </div>
+        <div class="player-modal__main-author">
+          <div>{{ data.author }}</div>
+          <div style="color: #999999;font-size: 14px">チャンネル登録なし</div>
+        </div>
+        <div style="border-top: 1px solid #ddd;padding: 12px">
+          <div style="color: #999999;font-size: 14px">次の動画</div>
+          <div v-for="tmp in [0,1,2,3,4,5,6,7,8,9]" style="display: flex;margin-top: 12px;">
+            <div style="background-color: #ddd;height: 80px; min-width: 120px"></div>
+            <div style="word-break: break-all;margin-left: 12px">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -59,8 +73,8 @@
         backgroundVisible: false,
         playing: false,
         data: {
-          title: 'タイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトルタイトル',
-          author: '作者作者作者作者作者作者作者作者作者作者作者作者作者作者作者'
+          title: 'なでぴよ 指一本で持ち上げる',
+          author: 'pscipdev'
         }
       };
     },
@@ -84,7 +98,7 @@
         };
       },
       imageStyle() {
-        const scale = this.imageSize / this.windowWidth;
+        const scale = this.imageSize / 250;
         return {
           transition: this.dragging ? undefined : 'transform 300ms',
           transform: `scale(${scale})`,
@@ -92,14 +106,14 @@
         };
       },
       mainStyle() {
-        const y = this.dragging ? -(this.windowWidth - this.imageSize) : 0;
+        const y = this.dragging ? -(250 - this.imageSize) : 0;
         return {
           opacity: this.swipeRatio,
           transform: `translateY(${y}px)`,
         };
       },
       imageSize() {
-        const size = this.windowWidth*this.swipeRatio;
+        const size = 250*this.swipeRatio;
         return size >= SEMIMODAL_HEIGHT ? size : SEMIMODAL_HEIGHT;
       },
       dragging() {
@@ -240,6 +254,7 @@
     text-align: center;
     line-height: 56px;
     font-size: 24px;
+    position: absolute;
   }
   .player-modal__image {
     background-image: url('./assets/image.jpg');
@@ -247,8 +262,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     cursor: zoom-in;
-    width: 100vw;
-    height: 100vw;
+    width: 375px;
+    height: 250px;
     transform-origin: left top;
   }
   .player-modal__semi-other {
@@ -256,8 +271,8 @@
     flex-grow: 1;
     align-items: center;
     overflow: hidden;
-    width: calc(100% - 64px);
-    margin-left: 64px;
+    width: calc(100% - 96px);
+    margin-left: 96px;
   }
   .player-modal__semi-content {
     text-align: left;
@@ -271,9 +286,11 @@
     white-space: nowrap;
   }
   .player-modal__semi-title {
+    text-align: left;
   }
   .player-modal__semi-author {
     color: #999;
+    text-align: left;
   }
   .player-modal__semi-action {
     display: flex;
@@ -289,10 +306,12 @@
   }
   .player-modal__main-title {
     width: 100%;
-    text-align: center;
-    font-size: 21px;
+    font-size: 17px;
+    padding: 12px;
   }
   .player-modal__main-author {
     width: 100%;
+    border-top: 1px solid #ddd;
+    padding: 12px;
   }
 </style>
